@@ -58,5 +58,8 @@ public class WineService {
 			return ResponseEntity.badRequest().body(errorMessage);
 		}
 	}
+	public void show(){
+		System.out.println("checking webhook");
+	}
 
 }
