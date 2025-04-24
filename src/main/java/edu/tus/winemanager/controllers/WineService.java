@@ -55,8 +55,9 @@ public class WineService {
 	}
 
 	@GetMapping("/show")
-	public void show(){
+	public String show(){
 		log.info("checking webhook working or no");
+		return "checking webhook working or no";
 	}
 
 }
