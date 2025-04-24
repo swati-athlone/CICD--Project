@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.tus.winemanager.dao.WineRepository;
 import edu.tus.winemanager.dto.Wine;
 import edu.tus.winemanager.exception.WineException;
-import edu.tus.winemanager.validation.ErrorMessage;
 import edu.tus.winemanager.validation.WineValidator;
 
 
