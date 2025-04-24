@@ -41,11 +41,11 @@ public class WineService {
 
 
 	@PostMapping("/wines")
-	public ResponseEntity<?> createWine(@Valid @RequestBody WineDto wineDto) {
+	public ResponseEntity<WineDto> createWine(@Valid @RequestBody WineDto wineDto) {
 		try {
 			// Validate using DTO
 			wineValidator.validateWine(wineDto);
-			log.info("Validated wine data");
+			log.info("Validated wine data successfully.");
 
 			// Map DTO to entity
 			Wine wine = new Wine();
@@ -58,11 +58,11 @@ public class WineService {
 			Wine savedWine = wineRepo.save(wine);
 			log.info("Saved wine in Database");
 
-			return ResponseEntity.status(HttpStatus.CREATED).body(savedWine);
+			return ResponseEntity.status(HttpStatus.CREATED).body(wineDto);
 
 		} catch (WineException e) {
 			ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
-			return ResponseEntity.badRequest().body(errorMessage);
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 
