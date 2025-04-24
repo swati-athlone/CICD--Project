@@ -4,7 +4,7 @@ import edu.tus.winemanager.dto.Wine;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WineTest {
+ class WineTest {
 
     @Test
     void testWineGettersAndSetters() {

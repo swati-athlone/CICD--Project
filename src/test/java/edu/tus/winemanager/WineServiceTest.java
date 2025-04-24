@@ -21,7 +21,7 @@ import edu.tus.winemanager.exception.WineValidationException;
 import edu.tus.winemanager.validation.WineValidator;
 
 @ExtendWith(MockitoExtension.class)
-public class WineServiceTest {
+ class WineServiceTest {
 
     @Mock
     private WineRepository wineRepo;

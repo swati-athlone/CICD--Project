@@ -15,7 +15,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WineValidatorTest {
+ class WineValidatorTest {
 
     @Mock
     private WineRepository wineRepo;
