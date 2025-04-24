@@ -18,7 +18,18 @@ public class Wine {
 	private int year;
 	private String grapes;
 	private String country;
-	
+
+	public Wine(String name, int year, String grapes, String country) {
+		this.country = country;
+		this.year = year;
+		this.grapes = grapes;
+		this.name = name;
+	}
+
+	public Wine(){
+
+	}
+
 	public Long getId() {
 		return id;
 	}

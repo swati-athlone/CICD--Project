@@ -8,12 +8,15 @@ import java.util.List;
 
 import edu.tus.winemanager.controllers.WineService;
 import edu.tus.winemanager.dto.WineDto;
+import edu.tus.winemanager.exception.WineException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import edu.tus.winemanager.dao.WineRepository;
@@ -21,8 +24,10 @@ import edu.tus.winemanager.dto.Wine;
 import edu.tus.winemanager.exception.WineValidationException;
 import edu.tus.winemanager.validation.WineValidator;
 
-@ExtendWith(MockitoExtension.class)
- class WineServiceTest {
+class WineServiceTest {
+
+    @InjectMocks
+    private WineService wineService;
 
     @Mock
     private WineRepository wineRepo;
@@ -30,72 +35,68 @@ import edu.tus.winemanager.validation.WineValidator;
     @Mock
     private WineValidator wineValidator;
 
-    @InjectMocks
-    private WineService wineService;
-
-    private Wine wine1;
-    private Wine wine2;
-
     @BeforeEach
     void setUp() {
-        wine1 = new Wine();
-        wine1.setId(1L);
-        wine1.setName("Cabernet");
-        wine1.setYear(2015);
-        wine1.setGrapes("Cabernet Sauvignon");
-        wine1.setCountry("France");
-
-        wine2 = new Wine();
-        wine2.setId(2L);
-        wine2.setName("Chardonnay");
-        wine2.setYear(2018);
-        wine2.setGrapes("Chardonnay");
-        wine2.setCountry("USA");
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testFindAllWines() {
+    void testFindAllWines_ReturnsWineList() {
+        Wine wine1 = new Wine("Red Delight", 2020, "Cabernet", "France");
+        Wine wine2 = new Wine("White Charm", 2021, "Chardonnay", "Italy");
+
         when(wineRepo.findAll()).thenReturn(Arrays.asList(wine1, wine2));
-        List<Wine> wines = wineService.findAllWines();
-        assertEquals(2, wines.size());
+
+        List<Wine> result = wineService.findAllWines();
+
+        assertEquals(2, result.size());
         verify(wineRepo, times(1)).findAll();
     }
 
     @Test
-    void testCreateWine_Success() throws WineValidationException {
+    void testCreateWine_Success() throws WineException {
         WineDto wineDto = new WineDto();
-        wineDto.setName(wine1.getName());
-        wineDto.setYear(wine1.getYear());
-        wineDto.setGrapes(wine1.getGrapes());
-        wineDto.setCountry(wine1.getCountry());
+        wineDto.setName("Rose Light");
+        wineDto.setYear(2022);
+        wineDto.setGrapes("Syrah");
+        wineDto.setCountry("Spain");
 
-        doNothing().when(wineValidator).validateWine(wineDto);
-        when(wineRepo.save(any(Wine.class))).thenReturn(wine1);
+        Wine wine = new Wine();
+        wine.setName("Rose Light");
+        wine.setYear(2022);
+        wine.setGrapes("Syrah");
+        wine.setCountry("Spain");
+
+        when(wineRepo.save(any(Wine.class))).thenReturn(wine);
+
         ResponseEntity<WineDto> response = wineService.createWine(wineDto);
-        assertEquals(201, response.getStatusCodeValue());
-        verify(wineRepo, times(1)).save(any(Wine.class));
 
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Rose Light", response.getBody().getName());
+
+        verify(wineValidator).validateWine(wineDto);
+        verify(wineRepo).save(any(Wine.class));
     }
 
     @Test
-    void testCreateWine_ValidationFailure() throws WineValidationException {
-
+    void testCreateWine_ValidationFails() throws WineException {
         WineDto wineDto = new WineDto();
-        wineDto.setName(wine1.getName());
-        wineDto.setYear(wine1.getYear());
-        wineDto.setGrapes(wine1.getGrapes());
-        wineDto.setCountry(wine1.getCountry());
+        doThrow(new WineException("Invalid")).when(wineValidator).validateWine(wineDto);
 
-        doThrow(new WineValidationException("Wine validation failed"))
-                .when(wineValidator).validateWine(wineDto);
         ResponseEntity<WineDto> response = wineService.createWine(wineDto);
-        assertEquals(400, response.getStatusCodeValue());
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+
+        verify(wineValidator).validateWine(wineDto);
         verify(wineRepo, never()).save(any(Wine.class));
     }
 
     @Test
-    void testShow(){
-        assertEquals("checking webhook working or no", wineService.show());
+    void testShow_ReturnsMessage() {
+        String result = wineService.show();
+        assertEquals("checking webhook working or no", result);
     }
 }
 
