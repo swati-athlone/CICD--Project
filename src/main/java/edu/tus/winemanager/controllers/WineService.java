@@ -41,7 +41,7 @@ public class WineService {
 
 
 	@PostMapping("/wines")
-	public ResponseEntity createWine(@Valid @RequestBody WineDto wineDto) {
+	public ResponseEntity<?> createWine(@Valid @RequestBody WineDto wineDto) {
 		try {
 			// Validate using DTO
 			wineValidator.validateWine(wineDto);
