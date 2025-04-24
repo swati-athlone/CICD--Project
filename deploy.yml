@@ -4,7 +4,7 @@
   tasks:
     - name: Copy JAR to /opt/apps (or any deploy path)
       copy:
-        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager-1.0.jar
+        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager.jar
         dest: /Users/swati/deploy/wine-manager/wine-manager.jar
         mode: '0755'
         force: yes
