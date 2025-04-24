@@ -68,7 +68,6 @@ public class WineService {
 			return ResponseEntity.status(HttpStatus.CREATED).body(wineDto1);
 
 		} catch (WineException e) {
-			ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
 			return ResponseEntity.badRequest().body(null);
 		}
 	}
