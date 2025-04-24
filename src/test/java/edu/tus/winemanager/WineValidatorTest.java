@@ -1,3 +1,5 @@
+package edu.tus.winemanager;
+
 import edu.tus.winemanager.dao.WineRepository;
 import edu.tus.winemanager.dto.Wine;
 import edu.tus.winemanager.exception.WineValidationException;

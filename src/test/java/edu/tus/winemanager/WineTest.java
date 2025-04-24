@@ -1,3 +1,5 @@
+package edu.tus.winemanager;
+
 import edu.tus.winemanager.dto.Wine;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

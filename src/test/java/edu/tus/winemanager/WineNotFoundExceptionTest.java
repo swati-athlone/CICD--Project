@@ -1,3 +1,5 @@
+package edu.tus.winemanager;
+
 import edu.tus.winemanager.exception.WineNotFoundException;
 import org.junit.jupiter.api.Test;
 
