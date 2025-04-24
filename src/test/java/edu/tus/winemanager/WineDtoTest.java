@@ -9,22 +9,22 @@ class WineDtoTest {
 
     @Test
     void testWineDtoGettersAndSetters() {
-        WineDto wine = new WineDto();
+        WineDto wineDto = new WineDto();
 
         // Test Name
-        wine.setName("Merlot");
-        assertEquals("Merlot", wine.getName());
+        wineDto.setName("Merlot");
+        assertEquals("Merlot", wineDto.getName());
 
         // Test Year
-        wine.setYear(2022);
-        assertEquals(2022, wine.getYear());
+        wineDto.setYear(2022);
+        assertEquals(2022, wineDto.getYear());
 
         // Test Grapes
-        wine.setGrapes("Cabernet");
-        assertEquals("Cabernet", wine.getGrapes());
+        wineDto.setGrapes("Cabernet");
+        assertEquals("Cabernet", wineDto.getGrapes());
 
         // Test Country
-        wine.setCountry("France");
-        assertEquals("France", wine.getCountry());
+        wineDto.setCountry("France");
+        assertEquals("France", wineDto.getCountry());
     }
 }

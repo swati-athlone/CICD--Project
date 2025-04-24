@@ -10,7 +10,12 @@ class ErrorMessageTest {
     void testConstructorAndGetter() {
         String message = "Something went wrong!";
         ErrorMessage errorMessage = new ErrorMessage(message);
-
         assertEquals(message, errorMessage.geteMessage());
+    }
+
+    @Test
+    void testErrorGettersAndSetters() {
+        ErrorMessage errorMessage = new ErrorMessage("Test");
+        assertEquals("Test", errorMessage.geteMessage());
     }
 }
