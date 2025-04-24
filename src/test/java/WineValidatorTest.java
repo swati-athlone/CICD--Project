@@ -50,7 +50,7 @@ public class WineValidatorTest {
         wine.setGrapes("Shiraz");
 
         WineValidationException e = assertThrows(WineValidationException.class, () -> wineValidator.validateWine(wine));
-        assertEquals("Some required fields are empty", e.getMessage()); // adjust this message to match your actual one
+        assertEquals("One or more empty fields", e.getMessage()); // adjust this message to match your actual one
     }
 
     @Test
@@ -58,7 +58,7 @@ public class WineValidatorTest {
         when(wineRepo.findByCountry("France")).thenReturn(Arrays.asList(new Wine(), new Wine(), new Wine()));
 
         WineValidationException e = assertThrows(WineValidationException.class, () -> wineValidator.validateWine(validWine));
-        assertEquals("Too many wines from the same country", e.getMessage()); // adjust message
+        assertEquals("Not accepting more wines from that country", e.getMessage()); // adjust message
     }
 
     @Test
@@ -67,7 +67,7 @@ public class WineValidatorTest {
         when(wineRepo.findByNameAndYear("Cabernet", 2020)).thenReturn(Optional.of(new Wine()));
 
         WineValidationException e = assertThrows(WineValidationException.class, () -> wineValidator.validateWine(validWine));
-        assertEquals("Wine with this name and year already exists", e.getMessage()); // adjust message
+        assertEquals("Wine with given name and year already exists", e.getMessage()); // adjust message
     }
 
     @Test
@@ -77,6 +77,6 @@ public class WineValidatorTest {
         when(wineRepo.findByNameAndYear(anyString(), anyInt())).thenReturn(Optional.empty());
 
         WineValidationException e = assertThrows(WineValidationException.class, () -> wineValidator.validateWine(validWine));
-        assertEquals("Merlot is not allowed", e.getMessage()); // adjust message
+        assertEquals("Type of grape not acceptable", e.getMessage()); // adjust message
     }
 }
