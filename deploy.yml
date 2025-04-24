@@ -1,11 +1,26 @@
-- name: Deploy Spring Boot App
+- name: Deploy Wine Manager JAR
   hosts: local
+  connection: local
   tasks:
-    - name: Copy JAR
+    - name: Copy JAR to /opt/apps (or any deploy path)
       copy:
-        src: ./target/wine-manager-1.0.jar
-        dest: /opt/app/app.jar
+        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager-1.0.jar
+        dest: /Users/swati/deploy/wine-manager/wine-manager.jar
         mode: '0755'
 
-    - name: Start Application
-      shell: java -jar /opt/app/app.jar > /opt/app/log.txt 2>&1 &
+    - name: Run the Wine Manager JAR
+      shell: |
+        cd /Users/swati/deploy
+        nohup /usr/bin/java -jar /Users/swati/deploy/wine-manager/wine-manager.jar > wine.log 2>&1 &
+        disown
+        echo "Wine app started"
+      args:
+        chdir: /Users/swati/deploy
+      async: 10
+      poll: 0
+      register: result
+
+    - name: Show app launch output
+      debug:
+        var: result
+
