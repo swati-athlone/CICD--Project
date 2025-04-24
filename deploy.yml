@@ -7,6 +7,7 @@
         src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager-1.0.jar
         dest: /Users/swati/deploy/wine-manager/wine-manager.jar
         mode: '0755'
+        force: yes
 
     - name: Run the Wine Manager JAR
       shell: |
