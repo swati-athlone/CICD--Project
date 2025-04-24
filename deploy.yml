@@ -11,7 +11,7 @@
 
     - name: Kill existing Wine Manager process
       shell: |
-        pkill -f 'java.*wine-manager.jar' || true
+        pkill -f 'java.*wine-manager*.jar' || true
         echo "Wine app killed successfully."
       ignore_errors: yes
 
