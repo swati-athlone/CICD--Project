@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import edu.tus.winemanager.dto.WineDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ import edu.tus.winemanager.validation.WineValidator;
 @Service
 public class WineService {
 
-private final WineRepository wineRepo;
+	private final WineRepository wineRepo;
 	private final WineValidator wineValidator;
 	private static final Logger log = LoggerFactory.getLogger(WineService.class);
 
@@ -40,15 +41,27 @@ private final WineRepository wineRepo;
 
 
 	@PostMapping("/wines")
-	public ResponseEntity createWine(@Valid @RequestBody Wine wine) {
+	public ResponseEntity createWine(@Valid @RequestBody WineDto wineDto) {
 		try {
-			wineValidator.validateWine(wine);
-			log.info("Validated wines in Database");
-			Wine savedWine=wineRepo.save(wine);
-			log.info("Saved wines in Database");
+			// Validate using DTO
+			wineValidator.validateWine(wineDto);
+			log.info("Validated wine data");
+
+			// Map DTO to entity
+			Wine wine = new Wine();
+			wine.setName(wineDto.getName());
+			wine.setYear(wineDto.getYear());
+			wine.setGrapes(wineDto.getGrapes());
+			wine.setCountry(wineDto.getCountry());
+
+			// Save entity
+			Wine savedWine = wineRepo.save(wine);
+			log.info("Saved wine in Database");
+
 			return ResponseEntity.status(HttpStatus.CREATED).body(savedWine);
-		}catch(WineException e) {
-			ErrorMessage errorMessage=new ErrorMessage(e.getMessage());
+
+		} catch (WineException e) {
+			ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
 			return ResponseEntity.badRequest().body(errorMessage);
 		}
 	}

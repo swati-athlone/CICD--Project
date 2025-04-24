@@ -34,24 +34,18 @@ public class Wine {
 	public String getGrapes() {
 		return grapes;
 	}
-	public void setGrages(String grapes) {
-		this.grapes = grapes;
-	}
 	public String getCountry() {
 		return country;
 	}
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
 	public int getYear() {
 		return year;
 	}
-
 	public void setYear(int year) {
 		this.year = year;
 	}
-
 	public void setGrapes(String grapes) {
 		this.grapes = grapes;
 	}

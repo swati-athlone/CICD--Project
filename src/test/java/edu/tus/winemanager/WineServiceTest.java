@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.tus.winemanager.controllers.WineService;
+import edu.tus.winemanager.dto.WineDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,18 +63,34 @@ import edu.tus.winemanager.validation.WineValidator;
 
     @Test
     void testCreateWine_Success() throws WineValidationException {
-        doNothing().when(wineValidator).validateWine(wine1);
-        when(wineRepo.save(wine1)).thenReturn(wine1);
-        ResponseEntity response = wineService.createWine(wine1);
+        WineDto wineDto = new WineDto();
+        wineDto.setName(wine1.getName());
+        wineDto.setYear(wine1.getYear());
+        wineDto.setGrapes(wine1.getGrapes());
+        wineDto.setCountry(wine1.getCountry());
+
+        doNothing().when(wineValidator).validateWine(wineDto);
+        //when(wineRepo.save(wine1)).thenReturn(wine1);
+        when(wineRepo.save(any(Wine.class))).thenReturn(wine1);
+        ResponseEntity response = wineService.createWine(wineDto);
         assertEquals(201, response.getStatusCodeValue());
-        verify(wineRepo, times(1)).save(wine1);
+        //verify(wineRepo, times(1)).save(wine1);
+        verify(wineRepo, times(1)).save(any(Wine.class));
+
     }
 
     @Test
     void testCreateWine_ValidationFailure() throws WineValidationException {
+
+        WineDto wineDto = new WineDto();
+        wineDto.setName(wine1.getName());
+        wineDto.setYear(wine1.getYear());
+        wineDto.setGrapes(wine1.getGrapes());
+        wineDto.setCountry(wine1.getCountry());
+
         doThrow(new WineValidationException("Wine validation failed"))
-                .when(wineValidator).validateWine(wine1);
-        ResponseEntity response = wineService.createWine(wine1);
+                .when(wineValidator).validateWine(wineDto);
+        ResponseEntity response = wineService.createWine(wineDto);
         assertEquals(400, response.getStatusCodeValue());
         verify(wineRepo, never()).save(any(Wine.class));
     }

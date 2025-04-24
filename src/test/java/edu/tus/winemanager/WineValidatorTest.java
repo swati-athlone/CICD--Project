@@ -2,6 +2,7 @@ package edu.tus.winemanager;
 
 import edu.tus.winemanager.dao.WineRepository;
 import edu.tus.winemanager.dto.Wine;
+import edu.tus.winemanager.dto.WineDto;
 import edu.tus.winemanager.exception.WineValidationException;
 import edu.tus.winemanager.validation.WineValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,12 +24,12 @@ import static org.junit.jupiter.api.Assertions.*;
     @InjectMocks
     private WineValidator wineValidator;
 
-    private Wine validWine;
+    private WineDto validWine;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        validWine = new Wine();
+        validWine = new WineDto();
         validWine.setName("Cabernet");
         validWine.setCountry("France");
         validWine.setYear(2020);
@@ -45,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testEmptyFields() {
-        Wine wine = new Wine();
+        WineDto wine = new WineDto();
         wine.setName("");
         wine.setCountry("France");
         wine.setYear(2020);
