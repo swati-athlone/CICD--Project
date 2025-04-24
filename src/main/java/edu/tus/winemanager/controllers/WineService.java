@@ -54,7 +54,7 @@ public class WineService {
 		}
 	}
 	public void show(){
-		System.out.println("checking webhook");
+		log.info("checking webhook");
 	}
 
 }
