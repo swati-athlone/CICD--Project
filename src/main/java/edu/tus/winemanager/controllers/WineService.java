@@ -53,6 +53,8 @@ public class WineService {
 			return ResponseEntity.badRequest().body(errorMessage);
 		}
 	}
+
+	@GetMapping("/show")
 	public void show(){
 		log.info("checking webhook working or no");
 	}
