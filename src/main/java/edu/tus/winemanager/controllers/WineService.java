@@ -44,7 +44,7 @@ public class WineService {
 	public ResponseEntity createWine(@Valid @RequestBody Wine wine) {
 		try {
 			wineValidator.validateWine(wine);
-			log.info("Validated wines in DB");
+			log.info("Validated wines in Database");
 			Wine savedWine=wineRepo.save(wine);
 			log.info("Saved wines in Database");
 			return ResponseEntity.status(HttpStatus.CREATED).body(savedWine);
