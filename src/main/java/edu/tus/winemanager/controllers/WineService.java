@@ -44,7 +44,7 @@ public class WineService {
 	public ResponseEntity createWine(@Valid @RequestBody WineDto wineDto) {
 		try {
 			// Validate using DTO
-			wineValidator.validateWine((WineDto) wineDto);
+			wineValidator.validateWine(wineDto);
 			log.info("Validated wine data");
 
 			// Map DTO to entity
