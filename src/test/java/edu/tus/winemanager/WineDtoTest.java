@@ -1,12 +1,11 @@
 package edu.tus.winemanager;
 
-import edu.tus.winemanager.dto.Wine;
 import edu.tus.winemanager.dto.WineDto;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WineDtoTest {
+class WineDtoTest {
 
     @Test
     void testWineDtoGettersAndSetters() {

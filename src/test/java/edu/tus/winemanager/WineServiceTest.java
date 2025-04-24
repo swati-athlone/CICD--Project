@@ -70,11 +70,9 @@ import edu.tus.winemanager.validation.WineValidator;
         wineDto.setCountry(wine1.getCountry());
 
         doNothing().when(wineValidator).validateWine(wineDto);
-        //when(wineRepo.save(wine1)).thenReturn(wine1);
         when(wineRepo.save(any(Wine.class))).thenReturn(wine1);
         ResponseEntity response = wineService.createWine(wineDto);
         assertEquals(201, response.getStatusCodeValue());
-        //verify(wineRepo, times(1)).save(wine1);
         verify(wineRepo, times(1)).save(any(Wine.class));
 
     }

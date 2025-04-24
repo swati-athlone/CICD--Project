@@ -9,11 +9,9 @@ import edu.tus.winemanager.exception.WineValidationException;
 
 @Component
 public class WineValidator {
-	private WineDto wine;
 	private WineRepository wineRepo;
 
 	public void validateWine(WineDto wine) throws WineValidationException {
-		this.wine = wine;
 		checkEmptyFields(wine);
 		checkForVintage(wine);
 		checkMoreThanThreeWinesFromCountry(wine);
@@ -36,7 +34,6 @@ public class WineValidator {
 	}
 	//if wine with name and year already exists
 	private void checkForVintage(WineDto wine) throws WineValidationException {
-		this.wine = wine;
 		Optional<Wine> savedWine = wineRepo.findByNameAndYear(wine.getName(), wine.getYear());
 		if (savedWine.isPresent()){
 			throw new WineValidationException(ErrorMessages.ALREADY_EXISTS.getMsg());
