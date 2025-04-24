@@ -45,7 +45,7 @@ public class WineService {
 		try {
 			// Validate using DTO
 			wineValidator.validateWine(wineDto);
-			log.info("Validated wine data successfully.");
+			log.info("Validated wine data");
 
 			// Map DTO to entity
 			Wine wine = new Wine();
@@ -58,7 +58,14 @@ public class WineService {
 			Wine savedWine = wineRepo.save(wine);
 			log.info("Saved wine in Database");
 
-			return ResponseEntity.status(HttpStatus.CREATED).body(wineDto);
+			WineDto wineDto1 = new WineDto();
+			wineDto1.setName(savedWine.getName());
+			wineDto1.setYear(savedWine.getYear());
+			wineDto1.setGrapes(savedWine.getGrapes());
+			wineDto1.setCountry(savedWine.getCountry());
+
+
+			return ResponseEntity.status(HttpStatus.CREATED).body(wineDto1);
 
 		} catch (WineException e) {
 			ErrorMessage errorMessage = new ErrorMessage(e.getMessage());
