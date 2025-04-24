@@ -8,7 +8,7 @@
   </parent>
   <groupId>edu.tus.winemanager</groupId>
   <artifactId>wine-manager</artifactId>
-
+  <version>1.0</version>
   <name>Wine Manager Application</name>
    <properties>
 	<!--  	<java.version>1.8</java.version>-->
