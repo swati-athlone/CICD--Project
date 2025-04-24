@@ -17,7 +17,7 @@
 
     - name: Wait for app to stop completely
       pause:
-        seconds: 3
+        seconds: 5
 
     - name: Run the Wine Manager JAR
       shell: |

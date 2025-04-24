@@ -1,14 +1,14 @@
 package edu.tus.winemanager.validation;
 
 public class ErrorMessage {
-	String errorMessage;
+	String eMessage;
 	
 	public ErrorMessage(String message) {
-		this.errorMessage=message;
+		this.eMessage =message;
 	}
 	
-	public String getErrorMessage() {
-		return errorMessage;
+	public String geteMessage() {
+		return eMessage;
 	}
 
 }
