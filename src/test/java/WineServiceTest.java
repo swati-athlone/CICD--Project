@@ -75,5 +75,10 @@ public class WineServiceTest {
         assertEquals(400, response.getStatusCodeValue());
         verify(wineRepo, never()).save(any(Wine.class));
     }
+
+    @Test
+    void testShow(){
+        assertEquals("checking webhook working or no", wineService.show());
+    }
 }
 
