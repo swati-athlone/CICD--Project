@@ -9,12 +9,18 @@
         mode: '0755'
         force: yes
 
+    - name: Kill existing Wine Manager process
+      shell: |
+        pkill -f 'java.*wine-manager.jar' || true
+        echo "Wine app killed successfully."
+      ignore_errors: yes
+
     - name: Run the Wine Manager JAR
       shell: |
         cd /Users/swati/deploy
-        nohup /usr/bin/java -jar /Users/swati/deploy/wine-manager/wine-manager.jar > wine.log 2>&1 &
+        nohup /usr/bin/java -jar /Users/swati/deploy/wine-manager/wine-manager.jar > /Users/swati/deploy/wine-manager/wine.log 2>&1 &
         disown
-        echo "Wine app started"
+        echo "Wine app started successfully."
       args:
         chdir: /Users/swati/deploy
       async: 10
