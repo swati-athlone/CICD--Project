@@ -24,7 +24,7 @@ class WineDtoTest {
         assertEquals("Cabernet", wineDto.getGrapes());
 
         // Test Country
-        wineDto.setCountry("France");
-        assertEquals("France", wineDto.getCountry());
+        wineDto.setCountry("France1");
+        assertEquals("France1", wineDto.getCountry());
     }
 }
