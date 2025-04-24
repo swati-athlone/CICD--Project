@@ -46,7 +46,7 @@ public class WineService {
 			wineValidator.validateWine(wine);
 			log.info("Validated wines");
 			Wine savedWine=wineRepo.save(wine);
-			log.info("Saved wine in Database");
+			log.info("Saved wines in Database");
 			return ResponseEntity.status(HttpStatus.CREATED).body(savedWine);
 		}catch(WineException e) {
 			ErrorMessage errorMessage=new ErrorMessage(e.getMessage());
