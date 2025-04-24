@@ -11,9 +11,13 @@
 
     - name: Kill existing Wine Manager process
       shell: |
-        pkill -f 'java.*wine-manager*.jar' || true
+        PID=$(lsof -ti:8081) && kill -9 $PID || echo "Nothing running on 8081"
         echo "Wine app killed successfully."
       ignore_errors: yes
+
+    - name: Wait for app to stop completely
+      pause:
+        seconds: 3
 
     - name: Run the Wine Manager JAR
       shell: |
