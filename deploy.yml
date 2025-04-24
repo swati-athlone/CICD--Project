@@ -1,0 +1,11 @@
+- name: Deploy Spring Boot App
+  hosts: local
+  tasks:
+    - name: Copy JAR
+      copy:
+        src: ./target/wine-manager-1.0.jar
+        dest: /opt/app/app.jar
+        mode: '0755'
+
+    - name: Start Application
+      shell: java -jar /opt/app/app.jar > /opt/app/log.txt 2>&1 &

@@ -32,27 +32,27 @@ import edu.tus.winemanager.validation.WineValidator;
 @RestController
 @Service
 public class WineService {
-	
+
 	@Autowired
 	WineRepository wineRepo;
-	
+
 	@Autowired
 	WineValidator wineValidator;
-	
-	
+
+
 	@GetMapping("/wines")
 	public List<Wine> findAllWines(){
 		List<Wine> wines = wineRepo.findAll();
-		return wines;	
+		return wines;
 	}
-	
-	
+
+
 	@PostMapping("/wines")
-	ResponseEntity createWine(@Valid @RequestBody Wine wine) {
-		try {	
-		wineValidator.validateWine(wine);
-		Wine savedWine=wineRepo.save(wine);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedWine);
+	public ResponseEntity createWine(@Valid @RequestBody Wine wine) {
+		try {
+			wineValidator.validateWine(wine);
+			Wine savedWine=wineRepo.save(wine);
+			return ResponseEntity.status(HttpStatus.CREATED).body(savedWine);
 		}catch(WineException e) {
 			ErrorMessage errorMessage=new ErrorMessage(e.getMessage());
 			return ResponseEntity.badRequest().body(errorMessage);
