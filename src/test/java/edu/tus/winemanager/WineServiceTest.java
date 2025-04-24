@@ -71,7 +71,7 @@ import edu.tus.winemanager.validation.WineValidator;
 
         doNothing().when(wineValidator).validateWine(wineDto);
         when(wineRepo.save(any(Wine.class))).thenReturn(wine1);
-        ResponseEntity response = wineService.createWine(wineDto);
+        ResponseEntity<WineDto> response = wineService.createWine(wineDto);
         assertEquals(201, response.getStatusCodeValue());
         verify(wineRepo, times(1)).save(any(Wine.class));
 
@@ -88,7 +88,7 @@ import edu.tus.winemanager.validation.WineValidator;
 
         doThrow(new WineValidationException("Wine validation failed"))
                 .when(wineValidator).validateWine(wineDto);
-        ResponseEntity response = wineService.createWine(wineDto);
+        ResponseEntity<WineDto> response = wineService.createWine(wineDto);
         assertEquals(400, response.getStatusCodeValue());
         verify(wineRepo, never()).save(any(Wine.class));
     }
