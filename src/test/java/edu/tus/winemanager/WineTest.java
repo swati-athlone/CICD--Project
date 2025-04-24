@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WineTest {
 
     @Test
-    public void testWineGettersAndSetters() {
+    void testWineGettersAndSetters() {
         Wine wine = new Wine();
 
         // Test ID

@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,18 +24,18 @@ import edu.tus.winemanager.validation.WineValidator;
 @Service
 public class WineService {
 
-	@Autowired
-	WineRepository wineRepo;
+private final WineRepository wineRepo;
+	private final WineValidator wineValidator;
+	private static final Logger log = LoggerFactory.getLogger(WineService.class);
 
-	@Autowired
-	WineValidator wineValidator;
-
-	private static Logger log = LoggerFactory.getLogger(WineService.class);
+	public WineService(WineRepository wineRepo, WineValidator wineValidator) {
+		this.wineRepo = wineRepo;
+		this.wineValidator = wineValidator;
+	}
 
 	@GetMapping("/wines")
 	public List<Wine> findAllWines(){
-		List<Wine> wines = wineRepo.findAll();
-		return wines;
+		return wineRepo.findAll();
 	}
 
 

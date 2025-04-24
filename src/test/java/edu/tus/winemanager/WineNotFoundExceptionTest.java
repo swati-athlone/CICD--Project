@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class WineNotFoundExceptionTest {
 
     @Test
-    public void testWineNotFoundExceptionMessage() {
+     void testWineNotFoundExceptionMessage() {
         String message = "Wine not found with id 123";
         WineNotFoundException exception = new WineNotFoundException(message);
 

@@ -27,8 +27,8 @@ public class WineValidator {
 
 
 	private void checkEmptyFields(Wine wine) throws WineValidationException {
-		if ((wine.getName().length() == 0) || (wine.getCountry().length() == 0) || (wine.getYear() == 0)
-				|| (wine.getGrapes().length() == 0)) {
+		if ((wine.getName().isEmpty()) || (wine.getCountry().isEmpty()) || (wine.getYear() == 0)
+				|| (wine.getGrapes().isEmpty())) {
 			throw new WineValidationException(ErrorMessages.EMPTY_FIELDS.getMsg());
 		}
 	}
