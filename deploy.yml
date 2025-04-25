@@ -4,8 +4,9 @@
   become: true
 
   tasks:
-    - name: Stop running container (if exists)
+    - name: Stop and remove old running container (if exists)
       shell: |
+        docker stop wine-app || true
         docker rm -f wine-app || true
 
     - name: Remove existing image (if exists)
