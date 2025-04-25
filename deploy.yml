@@ -1,7 +1,7 @@
 - name: Deploy Wine Manager Docker Container
   hosts: local
   connection: local
-  become: true
+  become: yes
 
   tasks:
     - name: Check if port 8081 is occupied
@@ -41,12 +41,9 @@
         dest: /Users/swati/deploy/Dockerfile
 
     - name: Build Docker Image
-      shell: |
-        export PATH=$PATH:/usr/local/bin
-        docker build -t wine-manager:latest /Users/swati/deploy
+      shell: DOCKER_HOST=unix:///Users/swati/Library/Containers/com.docker.docker/Data/docker-cli.sock docker build -t wine-manager:latest /Users/swati/deploy
       args:
         chdir: /Users/swati/deploy
 
     - name: Run Docker Container
-      shell: |
-        /usr/local/bin/docker run -d -p 8081:8081 --name wine-app wine-manager:latest
+      shell: DOCKER_HOST=unix:///Users/swati/Library/Containers/com.docker.docker/Data/docker-cli.sock docker run -d -p 8081:8081 --name wine-app wine-manager:latest
