@@ -14,8 +14,8 @@
 
     - name: Copy JAR file to target build directory (already done by Jenkins)
       copy:
-        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager-1.0.jar
-        dest: /Users/swati/deploy/wine-manager.jar
+        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager.jar
+        dest: /Users/swati/deploy/wine-manager/wine-manager.jar
         mode: '0755'
 
     - name: Copy Dockerfile
