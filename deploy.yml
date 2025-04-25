@@ -20,7 +20,7 @@
 
     - name: Copy Dockerfile
       copy:
-        src: /Users/swati/CICD--Project/Dockerfile
+        src: /Users/swati/.jenkins/workspace/CICD--Project/Dockerfile
         dest: /Users/swati/deploy/Dockerfile
 
     - name: Build Docker Image
