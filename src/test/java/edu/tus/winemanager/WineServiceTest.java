@@ -79,6 +79,26 @@ class WineServiceTest {
         verify(wineRepo).save(any(Wine.class));
     }
 
+//    @Test
+//    void testCreateWine_ValidationFails() throws WineException {
+//        WineDto wineDto = new WineDto();
+//
+//        wineDto.setName("");
+//        wineDto.setYear(0);
+//        wineDto.setGrapes("");
+//        wineDto.setCountry("");
+//
+//        doThrow(new WineException("Invalid")).when(wineValidator).validateWine(wineDto);
+//
+//        ResponseEntity<WineDto> response = wineService.createWine(wineDto);
+//
+//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+//        assertNull(response.getBody());
+//
+//        verify(wineValidator).validateWine(wineDto);
+//        verify(wineRepo, never()).save(any(Wine.class));
+//    }
+
     @Test
     void testShow_ReturnsMessage() {
         String result = wineService.show();
