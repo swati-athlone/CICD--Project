@@ -4,6 +4,21 @@
   become: true
 
   tasks:
+    - name: Check if port 8081 is occupied
+      shell: |
+        lsof -i :8081 || true
+      register: port_check
+      ignore_errors: yes
+
+    - name: Kill process using port 8081 if occupied
+      shell: |
+        pid=$(lsof -ti:8081)
+        if [ -n "$pid" ]; then
+          kill -9 $pid || true
+        fi
+      when: port_check.stdout != ""
+      ignore_errors: yes
+
     - name: Stop and remove old running container (if exists)
       shell: |
         docker ps -q --filter "name=wine-app" | xargs -I {} docker stop {} || true
