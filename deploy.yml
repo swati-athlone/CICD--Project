@@ -25,6 +25,7 @@
 
     - name: Build Docker Image
       shell: |
+        export PATH=$PATH:/usr/local/bin
         docker build -t wine-manager:latest .
       args:
         chdir: /Users/swati/deploy
