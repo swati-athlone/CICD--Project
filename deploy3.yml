@@ -1,0 +1,37 @@
+- name: Deploy Wine Manager JAR
+  hosts: local
+  connection: local
+  tasks:
+    - name: Copy JAR to /opt/apps (or any deploy path)
+      copy:
+        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager-1.0.jar
+        dest: /Users/swati/deploy/wine-manager/wine-manager.jar
+        mode: '0755'
+        force: yes
+
+    - name: Kill existing Wine Manager process
+      shell: |
+        PID=$(lsof -ti:8081) && kill -9 $PID || echo "Nothing running on 8081"
+        echo "Wine app killed successfully."
+      ignore_errors: yes
+
+    - name: Wait for app to stop completely
+      pause:
+        seconds: 5
+
+    - name: Run the Wine Manager JAR
+      shell: |
+        cd /Users/swati/deploy
+        nohup /usr/bin/java -jar /Users/swati/deploy/wine-manager/wine-manager.jar > /Users/swati/deploy/wine-manager/wine.log 2>&1 &
+        disown
+        echo "Wine app started successfully."
+      args:
+        chdir: /Users/swati/deploy
+      async: 10
+      poll: 0
+      register: result
+
+    - name: Show app launch output
+      debug:
+        var: result
+

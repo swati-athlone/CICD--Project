@@ -1,37 +1,34 @@
-- name: Deploy Wine Manager JAR
+- name: Deploy Wine Manager Docker Container
   hosts: local
   connection: local
+  become: true
+
   tasks:
-    - name: Copy JAR to /opt/apps (or any deploy path)
+    - name: Stop running container (if exists)
+      shell: |
+        docker rm -f wine-app || true
+
+    - name: Remove existing image (if exists)
+      shell: |
+        docker rmi -f wine-manager:latest || true
+
+    - name: Copy JAR file to target build directory (already done by Jenkins)
       copy:
-        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager-1.0.jar
-        dest: /Users/swati/deploy/wine-manager/wine-manager.jar
+        src: /Users/swati/.jenkins/workspace/CICD-WineApp/target/wine-manager.jar
+        dest: /Users/swati/deploy/wine-manager.jar
         mode: '0755'
-        force: yes
 
-    - name: Kill existing Wine Manager process
+    - name: Copy Dockerfile
+      copy:
+        src: /Users/swati/CICD--Project/Dockerfile
+        dest: /Users/swati/deploy/Dockerfile
+
+    - name: Build Docker Image
       shell: |
-        PID=$(lsof -ti:8081) && kill -9 $PID || echo "Nothing running on 8081"
-        echo "Wine app killed successfully."
-      ignore_errors: yes
-
-    - name: Wait for app to stop completely
-      pause:
-        seconds: 5
-
-    - name: Run the Wine Manager JAR
-      shell: |
-        cd /Users/swati/deploy
-        nohup /usr/bin/java -jar /Users/swati/deploy/wine-manager/wine-manager.jar > /Users/swati/deploy/wine-manager/wine.log 2>&1 &
-        disown
-        echo "Wine app started successfully."
+        docker build -t wine-manager:latest .
       args:
         chdir: /Users/swati/deploy
-      async: 10
-      poll: 0
-      register: result
 
-    - name: Show app launch output
-      debug:
-        var: result
-
+    - name: Run Docker Container
+      shell: |
+        docker run -d -p 8081:8081 --name wine-app wine-manager:latest
