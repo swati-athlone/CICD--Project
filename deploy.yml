@@ -41,9 +41,9 @@
         dest: /Users/swati/deploy/Dockerfile
 
     - name: Build Docker Image
-      shell: DOCKER_HOST=unix:///Users/swati/Library/Containers/com.docker.docker/Data/docker-cli.sock docker build -t wine-manager:latest /Users/swati/deploy
+      shell: DOCKER_HOST=unix:///Users/swati/Library/Containers/com.docker.docker/Data/docker-cli.sock /usr/local/bin/docker build -t wine-manager:latest /Users/swati/deploy
       args:
         chdir: /Users/swati/deploy
 
     - name: Run Docker Container
-      shell: DOCKER_HOST=unix:///Users/swati/Library/Containers/com.docker.docker/Data/docker-cli.sock docker run -d -p 8081:8081 --name wine-app wine-manager:latest
+      shell: DOCKER_HOST=unix:///Users/swati/Library/Containers/com.docker.docker/Data/docker-cli.sock /usr/local/bin/docker run -d -p 8081:8081 --name wine-app wine-manager:latest
