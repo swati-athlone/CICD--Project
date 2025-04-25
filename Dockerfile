@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the built jar
-COPY target/wine-manager-1.0.jar wine-manager.jar
+COPY /Users/swati/deploy/wine-manager.jar wine-manager.jar
 
 # Run the jar file
 ENTRYPOINT ["java", "-jar", "wine-manager.jar"]
