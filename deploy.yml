@@ -32,4 +32,4 @@
 
     - name: Run Docker Container
       shell: |
-        docker run -d -p 8081:8081 --name wine-app wine-manager:latest
+        /usr/local/bin/docker run -d -p 8081:8081 --name wine-app wine-manager:latest
